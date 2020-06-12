@@ -33,4 +33,6 @@ def login_view(request):
         return restful.params_error(message=errors)
 
 
-
+# 注册视图
+def register_view(request):
+    pass
