@@ -2,6 +2,7 @@ from django import forms
 from django.core import validators
 from apps.forms import FormMixin
 from .models import User
+from django.core.cache import cache
 
 
 class LoginForm(forms.Form, FormMixin):
@@ -15,7 +16,8 @@ class RegisterForm(forms.Form, FormMixin):
     username = forms.CharField(max_length=20)
     password1 = forms.CharField(max_length=30, min_length=6, error_messages={"max_length": "密码最多不能超过30个字符", "min_length": '最短不能少于6个字符'})
     password2 = forms.CharField(max_length=30, min_length=6, error_messages={"max_length": "密码最多不能超过30个字符", "min_length": '最短不能少于6个字符'})
-    remember = forms.IntegerField(required=False)
+    image_captcha = forms.CharField(max_length=5, min_length=5)
+    sms_captcha = forms.CharField(max_length=5, min_length=5)
 
     def clean(self):
         cleaned_data = super(RegisterForm, self).clean()
@@ -25,6 +27,12 @@ class RegisterForm(forms.Form, FormMixin):
 
         if password1 != password2:
             raise forms.ValidationError('两次密码输入不一致')
+
+        image_captcha = cleaned_data.get('image_captcha')
+        catch_image_captcha = cache.get(image_captcha.lower())
+
+        if not catch_image_captcha or catch_image_captcha.lower() != image_captcha.lower():
+            raise forms.ValidationError('图形验证码不正确')
 
         telephone = cleaned_data.get('telephone')
 
