@@ -28,7 +28,7 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>CMS</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg">python1904后台管理系统</span>
+            <span class="logo-lg">python后台管理系统</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -61,7 +61,7 @@
                                     <a href="#" class="btn btn-default btn-flat">个人中心</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="{% url 'qfauth:logout' %}" class="btn btn-default btn-flat">退出登录</a>
+                                    <a href="{% url 'cmsauth:logout' %}" class="btn btn-default btn-flat">退出登录</a>
                                 </div>
                             </li>
                         </ul>
@@ -100,22 +100,22 @@
                         </a>
                     </li>
                     {% endif %}
-                    {% if perms.news.add_news %}
+
                     <li>
                         <a href="{% url 'cms:write_news' %}">
                             <i class="fa fa-edit"></i>
                             <span>发布新闻</span>
                         </a>
                     </li>
-                    {% endif %}
-                    {% if perms.news.add_newscategory %}
+
+
                     <li>
                         <a href="{% url 'cms:news_category' %}">
                             <i class="fa fa-tag"></i>
                             <span>新闻分类</span>
                         </a>
                     </li>
-                    {% endif %}
+
                     {% if perms.news.add_banner %}
                     <li>
                         <a href="#">
